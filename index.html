@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CampusCart - The premier e-commerce storefront for Indian college & university students. Order engineering textbooks, scientific calculators, stationery, and hostel essentials with instant 90-minute campus delivery.">
+  <meta name="keywords" content="campus store India, college essentials, student discounts, B.Tech textbooks, engineering mathematics, Casio calculators, hostel essentials, university shopping">
+  <meta name="theme-color" content="#0f172a">
+  <title>CampusCart – College & University Storefront | Indian Campus Edition</title>
+
+  <!-- Google Fonts: Inter & Outfit for modern, premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar" role="region" aria-label="Campus Promotion">
+    <div class="container announcement-content">
+      <span class="announcement-badge">CAMPUS SPECIAL</span>
+      <p class="announcement-text">
+        🎒 Semester Welcome Deal: Free Hostel Delivery on orders over ₹499! Use code <strong class="promo-code-pill">CAMPUS2026</strong> for 10% off.
+      </p>
+      <div class="announcement-meta">
+        <span>📍 Serving Campus Hostels, Canteen &amp; Academic Blocks</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header & Navigation Bar -->
+  <header class="site-header" id="header">
+    <div class="container header-container">
+      <!-- Brand Logo -->
+      <a href="#home" class="brand-logo" aria-label="CampusCart Home">
+        <div class="logo-icon-wrapper">
+          <svg class="logo-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="40" height="40" rx="10" fill="url(#brand-grad)" />
+            <!-- Graduation Cap -->
+            <path d="M20 9L9 15L20 21L31 15L20 9Z" fill="#FFFFFF" />
+            <path d="M12.5 17.5V23.5C12.5 25.5 16 28 20 28C24 28 27.5 25.5 27.5 23.5V17.5L20 21.5L12.5 17.5Z" fill="#E2E8F0" />
+            <!-- Cart silhouette accent -->
+            <path d="M16 29C15.4477 29 15 29.4477 15 30C15 30.5523 15.4477 31 16 31C16.5523 31 17 30.5523 17 30C17 29.4477 16.5523 29 16 29Z" fill="#F97316" stroke="#F97316" stroke-width="1.5" />
+            <path d="M24 29C23.4477 29 23 29.4477 23 30C23 30.5523 23.4477 31 24 31C24.5523 31 25 30.5523 25 30C25 29.4477 24.5523 29 24 29Z" fill="#F97316" stroke="#F97316" stroke-width="1.5" />
+            <defs>
+              <linearGradient id="brand-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#0F172A" />
+                <stop offset="1" stop-color="#1E293B" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text-group">
+          <span class="brand-name">Campus<span class="brand-accent">Cart</span></span>
+          <span class="brand-tagline">College Storefront</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#products" class="nav-link">All Products</a></li>
+          <li><a href="#categories" class="nav-link">Categories</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        <!-- Quick Search Trigger -->
+        <a href="#products" class="search-quick-btn" title="Quick Search Products" aria-label="Quick Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="action-svg">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="quick-search-label">Search catalog</span>
+        </a>
+
+        <!-- Shopping Cart Trigger Button -->
+        <button type="button" class="cart-trigger-btn" id="open-cart-btn" aria-label="View shopping cart" aria-haspopup="dialog">
+          <div class="cart-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cart-svg">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-count-badge" id="cart-badge" aria-live="polite">0</span>
+          </div>
+          <div class="cart-label-group">
+            <span class="cart-label-title">Cart</span>
+            <span class="cart-total-preview" id="cart-total-preview">₹0</span>
+          </div>
+        </button>
+
+        <!-- Mobile Menu Toggle Button (Hamburger) -->
+        <button type="button" class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer Overlay -->
+  <div class="mobile-drawer-overlay" id="mobile-drawer-overlay" aria-hidden="true"></div>
+  <aside class="mobile-nav-drawer" id="mobile-nav-drawer" aria-label="Mobile Navigation" aria-hidden="true">
+    <div class="mobile-drawer-header">
+      <div class="brand-text-group">
+        <span class="brand-name">Campus<span class="brand-accent">Cart</span></span>
+        <span class="brand-tagline">College Essentials</span>
+      </div>
+      <button type="button" class="drawer-close-btn" id="close-mobile-nav" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="mobile-drawer-body">
+      <ul class="mobile-nav-links">
+        <li><a href="#home" class="mobile-nav-link active">🏠 Home</a></li>
+        <li><a href="#products" class="mobile-nav-link">🛍️ All Products</a></li>
+        <li><a href="#categories" class="mobile-nav-link">📂 Categories</a></li>
+        <li><a href="#about" class="mobile-nav-link">🎓 About CampusCart</a></li>
+        <li><a href="#contact" class="mobile-nav-link">📞 Student Helpdesk</a></li>
+      </ul>
+      <div class="mobile-drawer-quick-categories">
+        <span class="drawer-subtitle">Shop By Category</span>
+        <div class="drawer-category-pills">
+          <button type="button" class="category-pill-btn" data-category="Books & Textbooks">Books</button>
+          <button type="button" class="category-pill-btn" data-category="Electronics">Electronics</button>
+          <button type="button" class="category-pill-btn" data-category="Stationery">Stationery</button>
+          <button type="button" class="category-pill-btn" data-category="Accessories">Accessories</button>
+          <button type="button" class="category-pill-btn" data-category="College Essentials">Essentials</button>
+        </div>
+      </div>
+      <div class="mobile-drawer-footer">
+        <p class="drawer-support-text">📍 Student Activity Center (SAC), Room 104</p>
+        <p class="drawer-support-phone">📞 +91 98765 43210</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Landmark -->
+  <main id="main-content">
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="hero-pill-badge">
+            <span class="badge-dot"></span>
+            <span>Official University Student Marketplace</span>
+          </div>
+          <h1 class="hero-headline">
+            Everything You Need for <span class="gradient-text">Campus Life</span>.
+          </h1>
+          <p class="hero-description">
+            Syllabus-aligned engineering textbooks, AICTE-approved scientific calculators, semester notebooks, and hostel living essentials with guaranteed 90-minute delivery to campus hostels and security gates.
+          </p>
+          <div class="hero-cta-group">
+            <a href="#products" class="btn btn-primary btn-lg">
+              <span>Shop All Products</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-arrow-icon"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <a href="#categories" class="btn btn-outline btn-lg">
+              Explore Categories
+            </a>
+          </div>
+
+          <!-- Trust Badges & Metrics -->
+          <div class="hero-perks-grid">
+            <div class="perk-card">
+              <div class="perk-icon-box">⚡</div>
+              <div class="perk-info">
+                <strong>90-Min Hostel Drop</strong>
+                <span>Hostel gate &amp; locker delivery</span>
+              </div>
+            </div>
+            <div class="perk-card">
+              <div class="perk-icon-box">📚</div>
+              <div class="perk-info">
+                <strong>University Aligned</strong>
+                <span>VTU, JNTU, AKTU &amp; Anna Univ</span>
+              </div>
+            </div>
+            <div class="perk-card">
+              <div class="perk-icon-box">🏷️</div>
+              <div class="perk-info">
+                <strong>Student Pricing</strong>
+                <span>Save up to 50% every semester</span>
+              </div>
+            </div>
+            <div class="perk-card">
+              <div class="perk-icon-box">🛡️</div>
+              <div class="perk-info">
+                <strong>7-Day Returns</strong>
+                <span>SAC Room 104 Drop-off</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual Banner -->
+        <div class="hero-visual">
+          <div class="hero-card-showcase">
+            <div class="floating-badge badge-top-left">
+              <span class="badge-emoji">🔥</span>
+              <div>
+                <strong>Hot Campus Pick</strong>
+                <small>Casio FX-991CW ClassWiz</small>
+              </div>
+            </div>
+            <div class="floating-badge badge-bottom-right">
+              <span class="badge-emoji">📦</span>
+              <div>
+                <strong>Hostel Ready</strong>
+                <small>Fast 90-Min Delivery</small>
+              </div>
+            </div>
+            <div class="hero-image-frame">
+              <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80" alt="Students studying together in Indian university campus library with textbooks, laptops, and study stationery" class="hero-main-img" loading="eager">
+              <div class="hero-image-overlay"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section" id="categories">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">CURATED DEPARTMENTS</span>
+          <h2 class="section-title">Shop by Campus Category</h2>
+          <p class="section-subtitle">Curated collections tailored specifically for university semester exams, lab sessions, and hostel living.</p>
+        </div>
+
+        <div class="categories-grid" id="categories-grid">
+          <!-- 1. Books & Textbooks -->
+          <div class="category-card" data-category="Books & Textbooks" role="button" tabindex="0" aria-label="View Books and Textbooks category">
+            <div class="category-image-wrap">
+              <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=600&q=80" alt="Engineering Textbooks" loading="lazy">
+              <div class="category-card-overlay"></div>
+            </div>
+            <div class="category-card-content">
+              <div class="category-icon-bubble">📚</div>
+              <h3 class="category-name">Books & Textbooks</h3>
+              <p class="category-desc">B.S. Grewal, Reema Thareja DSA, H.C. Verma, R.S. Aggarwal, and GATE prep.</p>
+              <div class="category-footer">
+                <span class="category-count" data-category-count="Books & Textbooks">Browse Items</span>
+                <span class="category-arrow">→</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Electronics -->
+          <div class="category-card" data-category="Electronics" role="button" tabindex="0" aria-label="View Electronics category">
+            <div class="category-image-wrap">
+              <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" alt="Electronics" loading="lazy">
+              <div class="category-card-overlay"></div>
+            </div>
+            <div class="category-card-content">
+              <div class="category-icon-bubble">💻</div>
+              <h3 class="category-name">Electronics</h3>
+              <p class="category-desc">Casio FX-991CW calculators, boAt Rockerz headphones, Mi power banks, Type-C hubs.</p>
+              <div class="category-footer">
+                <span class="category-count" data-category-count="Electronics">Browse Items</span>
+                <span class="category-arrow">→</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Stationery -->
+          <div class="category-card" data-category="Stationery" role="button" tabindex="0" aria-label="View Stationery category">
+            <div class="category-image-wrap">
+              <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=600&q=80" alt="Stationery" loading="lazy">
+              <div class="category-card-overlay"></div>
+            </div>
+            <div class="category-card-content">
+              <div class="category-icon-bubble">✏️</div>
+              <h3 class="category-name">Stationery</h3>
+              <p class="category-desc">Classmate Pulse spirals, Hauser XO exam pens, Luxor pastel highlighters, drafters.</p>
+              <div class="category-footer">
+                <span class="category-count" data-category-count="Stationery">Browse Items</span>
+                <span class="category-arrow">→</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Accessories -->
+          <div class="category-card" data-category="Accessories" role="button" tabindex="0" aria-label="View Accessories category">
+            <div class="category-image-wrap">
+              <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80" alt="Accessories" loading="lazy">
+              <div class="category-card-overlay"></div>
+            </div>
+            <div class="category-card-content">
+              <div class="category-icon-bubble">🎒</div>
+              <h3 class="category-name">Accessories</h3>
+              <p class="category-desc">Wildcraft campus backpacks, Milton thermosteel bottles, ergonomic laptop stands.</p>
+              <div class="category-footer">
+                <span class="category-count" data-category-count="Accessories">Browse Items</span>
+                <span class="category-arrow">→</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. College Essentials -->
+          <div class="category-card" data-category="College Essentials" role="button" tabindex="0" aria-label="View College Essentials category">
+            <div class="category-image-wrap">
+              <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80" alt="College Essentials" loading="lazy">
+              <div class="category-card-overlay"></div>
+            </div>
+            <div class="category-card-content">
+              <div class="category-icon-bubble">🛏️</div>
+              <h3 class="category-name">College Essentials</h3>
+              <p class="category-desc">Hostel Maggi electric kettles, GM power strips, single cot bed sheets, laundry hampers.</p>
+              <div class="category-footer">
+                <span class="category-count" data-category-count="College Essentials">Browse Items</span>
+                <span class="category-arrow">→</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Listing, Search, Filtering & Sorting Section -->
+    <section class="products-section" id="products">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+          <div class="header-titles">
+            <span class="section-tag">CAMPUS INVENTORY</span>
+            <h2 class="section-title">Explore Store Catalog</h2>
+            <p class="section-subtitle">Real-time inventory synchronization across university depot and campus stores.</p>
+          </div>
+          <div class="catalog-live-status" id="catalog-live-status">
+            <span class="status-indicator live"></span>
+            <span id="api-status-text">Connected to Campus Stock System</span>
+          </div>
+        </div>
+
+        <!-- Search, Filtering & Controls Toolbar -->
+        <div class="catalog-controls-card">
+          <!-- Search Row -->
+          <div class="search-row">
+            <div class="search-input-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-field-icon">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="catalog-search-input" class="search-input" placeholder="Search by book name, author (B.S. Grewal, H.C. Verma), brand (Casio, boAt, Classmate), or keywords..." autocomplete="off" aria-label="Search products">
+              <button type="button" class="search-clear-btn" id="search-clear-btn" aria-label="Clear search input" hidden>&times;</button>
+            </div>
+          </div>
+
+          <!-- Filter & Sort Row -->
+          <div class="filters-row">
+            <!-- Category Filter Pills -->
+            <div class="category-filters-container" role="tablist" aria-label="Filter products by category">
+              <button type="button" class="filter-tab active" data-category="all" role="tab" aria-selected="true">All Products</button>
+              <button type="button" class="filter-tab" data-category="Books & Textbooks" role="tab" aria-selected="false">📚 Books &amp; Textbooks</button>
+              <button type="button" class="filter-tab" data-category="Electronics" role="tab" aria-selected="false">💻 Electronics</button>
+              <button type="button" class="filter-tab" data-category="Stationery" role="tab" aria-selected="false">✏️ Stationery</button>
+              <button type="button" class="filter-tab" data-category="Accessories" role="tab" aria-selected="false">🎒 Accessories</button>
+              <button type="button" class="filter-tab" data-category="College Essentials" role="tab" aria-selected="false">🛏️ College Essentials</button>
+            </div>
+
+            <!-- Sorting & Options Group -->
+            <div class="filters-options-group">
+              <!-- In Stock Toggle -->
+              <label class="toggle-control" for="filter-in-stock">
+                <input type="checkbox" id="filter-in-stock" class="toggle-checkbox">
+                <span class="toggle-track"></span>
+                <span class="toggle-label">In-Stock Only</span>
+              </label>
+
+              <!-- Sort Dropdown -->
+              <div class="select-wrapper">
+                <label for="catalog-sort" class="sr-only">Sort Products</label>
+                <select id="catalog-sort" class="select-dropdown" aria-label="Sort products">
+                  <option value="featured">Sort by: Featured</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                  <option value="rating">Highest Rated</option>
+                  <option value="name">Name: A to Z</option>
+                </select>
+              </div>
+
+              <!-- Clear Filters Button -->
+              <button type="button" class="btn btn-secondary btn-sm" id="clear-all-filters-btn" title="Reset all applied filters">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-sm-icon"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                <span>Reset</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Active Filter Tags & Count Bar -->
+          <div class="filter-status-bar" id="filter-status-bar">
+            <div class="results-count" id="results-count" aria-live="polite">
+              Showing <span class="count-highlight" id="products-visible-count">0</span> products
+            </div>
+            <div class="active-filter-tags" id="active-tags-list">
+              <!-- Dynamic tags rendered by filters.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Products Grid Container -->
+        <div class="products-grid-wrapper">
+          <!-- Loading State Skeletons -->
+          <div class="products-loading-state" id="products-loading" aria-hidden="true" hidden>
+            <div class="product-skeleton-card"></div>
+            <div class="product-skeleton-card"></div>
+            <div class="product-skeleton-card"></div>
+            <div class="product-skeleton-card"></div>
+          </div>
+
+          <!-- Live Product Grid -->
+          <div class="products-grid" id="products-grid" role="region" aria-label="Product listings">
+            <!-- Dynamic product cards populated by products.js / filters.js -->
+          </div>
+
+          <!-- Empty State (No Matches) -->
+          <div class="empty-state-card" id="empty-products-state" hidden>
+            <div class="empty-icon-wrap">🔍</div>
+            <h3 class="empty-title">No matching campus products found</h3>
+            <p class="empty-desc">We couldn't find anything matching your exact search or filter combination. Try clearing your filters or searching for different keywords (e.g. B.S. Grewal, Casio, Maggi kettle).</p>
+            <button type="button" class="btn btn-primary" id="empty-reset-btn">Reset All Filters</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text-content">
+            <span class="section-tag">CAMPUS FIRST</span>
+            <h2 class="section-title">Built by Students, Designed for Modern Indian College Life</h2>
+            <p class="about-lead">
+              CampusCart was built to solve a familiar challenge in Indian university life: overpriced college bookstore counters, delayed online deliveries held up at hostel security gates, and outdated syllabus editions.
+            </p>
+            <p class="about-body">
+              We partner directly with academic publication houses, authorized electronics distributors, and student cooperative stores to supply syllabus-accurate textbooks, exam-approved calculators, and hostel essentials at student-friendly rates, with guaranteed 90-minute delivery to hostel gates and campus pickup lockers.
+            </p>
+
+            <div class="about-highlights-list">
+              <div class="highlight-item">
+                <div class="highlight-icon">⚡</div>
+                <div>
+                  <strong>90-Minute Hostel Delivery</strong>
+                  <p>Direct drop-offs at all Boys &amp; Girls Hostel reception gates and smart campus lockers.</p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <div class="highlight-icon">💰</div>
+                <div>
+                  <strong>Verified Student Discounts</strong>
+                  <p>Save up to 50% on MRP compared to commercial bookstores and local market stalls.</p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <div class="highlight-icon">♻️</div>
+                <div>
+                  <strong>Semester Book Buyback Hub</strong>
+                  <p>Return textbooks at the end of semester exams for instant campus store credits or UPI cash.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="about-image-showcase">
+            <div class="about-stat-card">
+              <span class="stat-number">25,000+</span>
+              <span class="stat-label">Engineering &amp; Degree Students Served</span>
+            </div>
+            <div class="about-image-frame">
+              <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80" alt="Students walking on Indian university campus quad" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & Student Support Section -->
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">NEED ASSISTANCE?</span>
+          <h2 class="section-title">Campus Helpdesk &amp; Support Hub</h2>
+          <p class="section-subtitle">We are physically based inside the Student Activity Center (SAC) on campus to handle orders, exchanges, and inquiries.</p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Contact Information & Campus Hub Card -->
+          <div class="contact-info-card">
+            <h3 class="card-inner-title">Campus Operations Desk</h3>
+            <p class="card-inner-desc">Visit our student desk for in-person pickups, textbook edition checks, or lab equipment replacements.</p>
+
+            <ul class="contact-details-list">
+              <li class="contact-detail-item">
+                <div class="detail-icon">📍</div>
+                <div>
+                  <strong>Physical Location</strong>
+                  <p>Student Activity Center (SAC), Ground Floor, Room 104, Campus Main Gate</p>
+                </div>
+              </li>
+              <li class="contact-detail-item">
+                <div class="detail-icon">🕒</div>
+                <div>
+                  <strong>Store &amp; Pickup Timings</strong>
+                  <p>Monday – Saturday: 8:00 AM – 10:00 PM<br>Sunday: 10:00 AM – 6:00 PM</p>
+                </div>
+              </li>
+              <li class="contact-detail-item">
+                <div class="detail-icon">📞</div>
+                <div>
+                  <strong>Direct Student Helpline</strong>
+                  <p>+91 98765 43210 &bull; Intercom Ext: 402</p>
+                </div>
+              </li>
+              <li class="contact-detail-item">
+                <div class="detail-icon">✉️</div>
+                <div>
+                  <strong>Official Student Email</strong>
+                  <p>support@campuscart.in &bull; orders@campuscart.in</p>
+                </div>
+              </li>
+            </ul>
+
+            <div class="campus-locker-notice">
+              <span class="locker-icon">📦</span>
+              <p><strong>Campus Smart Delivery Lockers:</strong> Accessible 24/7 near Hostel Mess &amp; Library Plaza with your digital Order OTP.</p>
+            </div>
+          </div>
+
+          <!-- Contact Form with Validation -->
+          <div class="contact-form-card">
+            <h3 class="card-inner-title">Send a Query to Student Helpdesk</h3>
+            <p class="card-inner-desc">Need a specific book edition or want to request department bulk supply? Let us know below.</p>
+
+            <form id="campus-contact-form" class="campus-form" novalidate>
+              <div class="form-row two-col">
+                <div class="form-group">
+                  <label for="contact-name" class="form-label">Full Name <span class="required">*</span></label>
+                  <input type="text" id="contact-name" name="name" class="form-input" placeholder="e.g. Rahul Sharma" required>
+                  <span class="form-error-msg" id="contact-name-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="contact-email" class="form-label">College Email ID <span class="required">*</span></label>
+                  <input type="email" id="contact-email" name="email" class="form-input" placeholder="student@college.edu" required>
+                  <span class="form-error-msg" id="contact-email-error"></span>
+                </div>
+              </div>
+
+              <div class="form-row two-col">
+                <div class="form-group">
+                  <label for="contact-student-id" class="form-label">Roll Number / USN / Student ID</label>
+                  <input type="text" id="contact-student-id" name="studentId" class="form-input" placeholder="e.g. 1MS22CS089">
+                </div>
+                <div class="form-group">
+                  <label for="contact-category" class="form-label">Inquiry Department</label>
+                  <select id="contact-category" name="category" class="form-input">
+                    <option value="general">General Campus Store Inquiry</option>
+                    <option value="textbook">Textbook Edition &amp; Syllabus Match</option>
+                    <option value="delivery">Hostel Gate Delivery Tracking</option>
+                    <option value="bulk">Department / College Society Bulk Order</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message" class="form-label">Message Details <span class="required">*</span></label>
+                <textarea id="contact-message" name="message" class="form-textarea" rows="4" placeholder="How can our student team assist you today?" required></textarea>
+                <span class="form-error-msg" id="contact-message-error"></span>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block" id="contact-submit-btn">
+                <span>Send Query to Helpdesk</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-arrow-icon"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Campus FAQ Accordion -->
+        <div class="faq-container">
+          <h3 class="faq-title text-center">Frequently Asked Campus Questions</h3>
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>How does the 90-minute hostel delivery work?</span>
+                <span class="faq-toggle-icon">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>When you place an order during operating hours (8:00 AM - 10:00 PM), our student delivery coordinators pick the items directly from the SAC Room 104 campus hub. The order is delivered directly to your Hostel Reception Gate, Security Desk, or Canteen Locker within 90 minutes with live SMS alerts.</p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>Are the Casio calculators approved for university semester exams?</span>
+                <span class="faq-toggle-icon">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>Yes. The Casio FX-991CW ClassWiz models are 100% non-programmable scientific calculators compliant with Anna University, VTU, JNTU, AKTU, Mumbai University, and national competitive exam guidelines.</p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary class="faq-question">
+                <span>Can I pay using UPI apps (GPay, PhonePe, Paytm)?</span>
+                <span class="faq-toggle-icon">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>Yes. We support Instant UPI payments (Google Pay, PhonePe, Paytm, BHIM) as well as Cash on Delivery at your hostel gate upon checking your parcel.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-container">
+      <div class="footer-top-grid">
+        <!-- Brand Column -->
+        <div class="footer-col brand-col">
+          <a href="#home" class="brand-logo footer-logo">
+            <div class="logo-icon-wrapper sm">
+              <svg class="logo-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="10" fill="#1E293B" />
+                <path d="M20 9L9 15L20 21L31 15L20 9Z" fill="#FFFFFF" />
+                <path d="M12.5 17.5V23.5C12.5 25.5 16 28 20 28C24 28 27.5 25.5 27.5 23.5V17.5L20 21.5L12.5 17.5Z" fill="#94A3B8" />
+              </svg>
+            </div>
+            <span class="brand-name">Campus<span class="brand-accent">Cart</span></span>
+          </a>
+          <p class="footer-about-text">
+            The official student-operated Indian university marketplace providing syllabus-matched textbooks, calculators, electronics, and daily hostel essentials.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="CampusCart Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="social-svg"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="CampusCart X/Twitter">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="social-svg"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="CampusCart GitHub">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="social-svg"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#products">All Products</a></li>
+            <li><a href="#categories">Campus Departments</a></li>
+            <li><a href="#about">About CampusCart</a></li>
+            <li><a href="#contact">Student Helpdesk</a></li>
+          </ul>
+        </div>
+
+        <!-- Categories Links -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Categories</h4>
+          <ul class="footer-links-list">
+            <li><a href="#products" class="footer-category-link" data-category="Books & Textbooks">Engineering Books &amp; GATE</a></li>
+            <li><a href="#products" class="footer-category-link" data-category="Electronics">Electronics &amp; Calculators</a></li>
+            <li><a href="#products" class="footer-category-link" data-category="Stationery">Classmate Notebooks &amp; Pens</a></li>
+            <li><a href="#products" class="footer-category-link" data-category="Accessories">Backpacks &amp; Laptop Stands</a></li>
+            <li><a href="#products" class="footer-category-link" data-category="College Essentials">Hostel Kettles &amp; Essentials</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter & Campus Updates -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Campus Bulletin</h4>
+          <p class="footer-newsletter-text">Subscribe for semester book sales, exam stationery kits, and hostel restock alerts.</p>
+          <form id="newsletter-form" class="newsletter-form" novalidate>
+            <div class="newsletter-input-group">
+              <input type="email" id="newsletter-email" placeholder="student@college.edu" required aria-label="Student email for newsletter">
+              <button type="submit" class="btn btn-primary btn-newsletter" aria-label="Subscribe to bulletin">Join</button>
+            </div>
+            <span class="newsletter-msg" id="newsletter-msg"></span>
+          </form>
+          <p class="footer-disclaimer">⚡ Pure HTML5, CSS3 &amp; Vanilla JS &bull; No Frameworks &bull; Indian Campus Edition</p>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 CampusCart Storefront. Developed for Indian College &amp; University Communities. All Rights Reserved.</p>
+        <div class="footer-badge-group">
+          <span class="badge-pill">🔒 Secure LocalStorage State</span>
+          <span class="badge-pill">🇮🇳 Indian Campus Edition (INR ₹)</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slide-Over Shopping Cart Drawer -->
+  <div class="cart-drawer-overlay" id="cart-drawer-overlay" aria-hidden="true"></div>
+  <aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Cart Drawer" aria-hidden="true">
+    <!-- Drawer Header -->
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title-group">
+        <h2 class="cart-drawer-title">Your Campus Cart</h2>
+        <span class="cart-drawer-item-count" id="drawer-item-count">0 items</span>
+      </div>
+      <button type="button" class="cart-close-btn" id="close-cart-btn" aria-label="Close cart drawer">&times;</button>
+    </div>
+
+    <!-- Free Delivery Progress Meter -->
+    <div class="delivery-progress-banner" id="delivery-progress-banner">
+      <div class="delivery-progress-text" id="delivery-progress-text">
+        Add <strong id="delivery-needed-amount">₹499</strong> more to unlock <strong>FREE Campus Hostel Delivery!</strong>
+      </div>
+      <div class="delivery-progress-bar-wrap">
+        <div class="delivery-progress-bar-fill" id="delivery-progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Cart Items Scrollable Container -->
+    <div class="cart-drawer-body" id="cart-drawer-body">
+      <!-- Empty Cart Message View -->
+      <div class="cart-empty-state" id="cart-empty-view">
+        <div class="cart-empty-icon">🛒</div>
+        <h3 class="cart-empty-title">Your campus cart is empty</h3>
+        <p class="cart-empty-desc">Stock up on engineering textbooks, Casio calculators, spiral registers, and hostel essentials before semester exams.</p>
+        <button type="button" class="btn btn-primary" id="cart-start-shopping-btn">Start Shopping Now</button>
+      </div>
+
+      <!-- Dynamic Cart Items List -->
+      <div class="cart-items-list" id="cart-items-container" role="list">
+        <!-- Rendered by cart.js -->
+      </div>
+    </div>
+
+    <!-- Cart Drawer Footer (Subtotal, Discount, Total, Checkout Button) -->
+    <div class="cart-drawer-footer" id="cart-drawer-footer">
+      <!-- Promo Code Field -->
+      <div class="promo-box-wrapper">
+        <div class="promo-input-group">
+          <input type="text" id="cart-promo-input" placeholder="Promo code (e.g. CAMPUS2026 / FRESHER15)" aria-label="Promo code">
+          <button type="button" class="btn btn-secondary btn-sm" id="apply-promo-btn">Apply</button>
+        </div>
+        <div class="promo-status-msg" id="promo-status-msg"></div>
+      </div>
+
+      <!-- Financial Breakdown -->
+      <div class="cart-summary-breakdown">
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <span class="summary-val" id="drawer-subtotal-val">₹0</span>
+        </div>
+        <div class="summary-line">
+          <span>Campus Delivery <small id="delivery-status-note">(Free over ₹499)</small></span>
+          <span class="summary-val" id="drawer-delivery-val">₹0</span>
+        </div>
+        <div class="summary-line discount-line" id="discount-summary-row" hidden>
+          <span>Student Discount</span>
+          <span class="summary-val discount-val" id="drawer-discount-val">-₹0</span>
+        </div>
+        <div class="summary-line total-line">
+          <strong>Estimated Total</strong>
+          <strong class="total-price-val" id="drawer-total-val">₹0</strong>
+        </div>
+      </div>
+
+      <!-- Cart Action Buttons -->
+      <div class="cart-drawer-actions">
+        <button type="button" class="btn btn-primary btn-block btn-lg" id="proceed-to-checkout-btn">
+          <span>Proceed to Campus Checkout</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-arrow-icon"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+        <button type="button" class="btn btn-link btn-clear-cart" id="clear-cart-btn">Clear Cart</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Quick View Product Modal -->
+  <div class="modal-backdrop" id="quick-view-backdrop" aria-hidden="true" hidden>
+    <div class="modal-dialog quick-view-dialog" role="dialog" aria-modal="true" aria-labelledby="qv-product-title">
+      <button type="button" class="modal-close-btn" id="close-quick-view-btn" aria-label="Close product quick view">&times;</button>
+      <div class="quick-view-content" id="quick-view-content">
+        <!-- Rendered dynamically by main.js / products.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Simulation Modal -->
+  <div class="modal-backdrop" id="checkout-backdrop" aria-hidden="true" hidden>
+    <div class="modal-dialog checkout-dialog" role="dialog" aria-modal="true" aria-labelledby="checkout-modal-title">
+      <div class="checkout-modal-header">
+        <div>
+          <span class="checkout-step-badge">CAMPUS FAST CHECKOUT</span>
+          <h2 class="modal-title" id="checkout-modal-title">Complete Your Campus Order</h2>
+        </div>
+        <button type="button" class="modal-close-btn" id="close-checkout-btn" aria-label="Close checkout">&times;</button>
+      </div>
+
+      <div class="checkout-modal-body">
+        <div class="checkout-layout">
+          <!-- Checkout Form Column -->
+          <div class="checkout-form-column">
+            <form id="checkout-form" class="checkout-form" novalidate>
+              <h3 class="form-section-heading">1. Student Contact &amp; Verification</h3>
+              <div class="form-row two-col">
+                <div class="form-group">
+                  <label for="checkout-name" class="form-label">Full Name <span class="required">*</span></label>
+                  <input type="text" id="checkout-name" name="name" class="form-input" placeholder="e.g. Rahul Sharma" required autocomplete="name">
+                  <span class="form-error-msg" id="checkout-name-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="checkout-email" class="form-label">College Email ID <span class="required">*</span></label>
+                  <input type="email" id="checkout-email" name="email" class="form-input" placeholder="rahul.sharma@college.edu" required autocomplete="email">
+                  <span class="form-error-msg" id="checkout-email-error"></span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="checkout-phone" class="form-label">Mobile Number (10 Digits) <span class="required">*</span></label>
+                <input type="tel" id="checkout-phone" name="phone" class="form-input" placeholder="e.g. 9876543210" required autocomplete="tel" maxlength="10">
+                <span class="form-error-msg" id="checkout-phone-error"></span>
+              </div>
+
+              <h3 class="form-section-heading">2. Campus Hostel / Department Delivery Address</h3>
+              <div class="form-group">
+                <label for="checkout-address" class="form-label">Hostel Name, Block &amp; Room No. / Department <span class="required">*</span></label>
+                <input type="text" id="checkout-address" name="address" class="form-input" placeholder="e.g. Ramanujan Hostel, Block B, Room 214, North Campus" required autocomplete="street-address">
+                <span class="form-error-msg" id="checkout-address-error"></span>
+              </div>
+
+              <div class="form-row three-col">
+                <div class="form-group">
+                  <label for="checkout-city" class="form-label">City / Campus Town <span class="required">*</span></label>
+                  <input type="text" id="checkout-city" name="city" class="form-input" placeholder="Hyderabad" required autocomplete="address-level2">
+                  <span class="form-error-msg" id="checkout-city-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="checkout-state" class="form-label">State <span class="required">*</span></label>
+                  <input type="text" id="checkout-state" name="state" class="form-input" placeholder="Telangana" required autocomplete="address-level1">
+                  <span class="form-error-msg" id="checkout-state-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="checkout-pincode" class="form-label">PIN Code (6 Digits) <span class="required">*</span></label>
+                  <input type="text" id="checkout-pincode" name="pincode" class="form-input" placeholder="500081" required autocomplete="postal-code" maxlength="6">
+                  <span class="form-error-msg" id="checkout-pincode-error"></span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="checkout-instructions" class="form-label">Hostel Delivery Instructions (Optional)</label>
+                <input type="text" id="checkout-instructions" name="instructions" class="form-input" placeholder="e.g. Call upon reaching hostel main security gate">
+              </div>
+
+              <h3 class="form-section-heading">3. Payment Mode (Simulation)</h3>
+              <div class="payment-method-selector">
+                <label class="payment-option selected">
+                  <input type="radio" name="paymentMethod" value="campus-upi" checked>
+                  <span class="payment-option-body">
+                    <strong>⚡ Instant UPI (Google Pay / PhonePe / Paytm / BHIM)</strong>
+                    <small>Instant simulated UPI confirmation</small>
+                  </span>
+                </label>
+                <label class="payment-option">
+                  <input type="radio" name="paymentMethod" value="campus-cod">
+                  <span class="payment-option-body">
+                    <strong>💵 Cash on Campus Delivery (COD)</strong>
+                    <small>Pay at hostel security gate upon inspecting parcel</small>
+                  </span>
+                </label>
+                <label class="payment-option">
+                  <input type="radio" name="paymentMethod" value="campus-card">
+                  <span class="payment-option-body">
+                    <strong>💳 College Student ID / Canteen Smart Card</strong>
+                    <small>Simulated student wallet debit</small>
+                  </span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block btn-lg mt-4" id="place-order-submit-btn">
+                <span class="btn-text">Place Order (<span id="submit-total-btn-amount">₹0</span>)</span>
+                <span class="btn-spinner" hidden></span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Checkout Order Review Column -->
+          <div class="checkout-review-column">
+            <div class="checkout-summary-box">
+              <h3 class="review-box-title">Order Items Summary</h3>
+              <div class="checkout-items-preview" id="checkout-items-preview">
+                <!-- Populated dynamically by checkout.js -->
+              </div>
+              <div class="checkout-price-breakdown">
+                <div class="summary-line">
+                  <span>Subtotal</span>
+                  <span id="checkout-subtotal-val">₹0</span>
+                </div>
+                <div class="summary-line">
+                  <span>Campus Delivery</span>
+                  <span id="checkout-delivery-val">₹0</span>
+                </div>
+                <div class="summary-line" id="checkout-discount-row" hidden>
+                  <span>Student Promo Discount</span>
+                  <span class="discount-val" id="checkout-discount-val">-₹0</span>
+                </div>
+                <div class="summary-line total-line">
+                  <strong>Total Payable</strong>
+                  <strong class="total-price-val" id="checkout-total-val">₹0</strong>
+                </div>
+              </div>
+              <div class="checkout-trust-guarantee">
+                <span>🛡️ 100% Student Purchase Protection Guaranteed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Confirmation Modal -->
+  <div class="modal-backdrop" id="confirmation-backdrop" aria-hidden="true" hidden>
+    <div class="modal-dialog confirmation-dialog" role="dialog" aria-modal="true" aria-labelledby="confirmation-modal-title">
+      <div class="confirmation-content text-center">
+        <div class="success-icon-animation">
+          <svg viewBox="0 0 52 52" class="checkmark-svg">
+            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+          </svg>
+        </div>
+        <span class="confirmation-badge">ORDER CONFIRMED</span>
+        <h2 class="confirmation-title" id="confirmation-modal-title">Badhai Ho! Order Placed Successfully 🎓</h2>
+        <p class="confirmation-desc">Your order has been routed to the Student Activity Center (SAC Room 104) fulfillment crew.</p>
+
+        <!-- Order ID Card with Copy Button -->
+        <div class="order-id-card">
+          <div class="order-id-group">
+            <span class="id-label">CAMPUS ORDER ID</span>
+            <span class="id-value" id="confirmed-order-id">CC-IN-000000</span>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="copy-order-id-btn" title="Copy Order ID to clipboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-sm-icon"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span id="copy-btn-text">Copy ID</span>
+          </button>
+        </div>
+
+        <!-- Receipt Summary Details -->
+        <div class="confirmed-order-receipt" id="confirmed-order-receipt">
+          <!-- Populated by checkout.js -->
+        </div>
+
+        <div class="confirmation-actions">
+          <button type="button" class="btn btn-outline" id="print-receipt-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-sm-icon"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>Print Receipt</span>
+          </button>
+          <button type="button" class="btn btn-primary" id="continue-shopping-btn">
+            Continue Shopping
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container (Fixed floating) -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Back to Top Button -->
+  <button type="button" class="back-to-top-btn" id="back-to-top-btn" aria-label="Back to top of page" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="top-arrow-icon"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+  </button>
+
+  <!-- JavaScript Modules in Dependency Order -->
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
