@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusCart – Comprehensive Technical Documentation & Architecture Manual</title>
+  <style>
+    /* =====================================================================
+       GLOBAL & PRINT STYLES - A4 SINGLE COLUMN EXECUTIVE TECHNICAL REPORT
+       ===================================================================== */
+    @page {
+      size: A4 portrait;
+      margin: 22mm 20mm 22mm 20mm;
+      @top-right {
+        content: "CampusCart Technical Documentation";
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        font-size: 8pt;
+        color: #64748b;
+      }
+      @bottom-right {
+        content: "Page " counter(page);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        font-size: 8pt;
+        color: #64748b;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.6;
+      color: #1e293b;
+      background: #ffffff;
+      padding: 0;
+    }
+
+    /* Page Breaks */
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    .avoid-break {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Headings */
+    h1, h2, h3, h4, h5 {
+      color: #0f172a;
+      font-weight: 700;
+      line-height: 1.3;
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    h1.chapter-title {
+      font-size: 18pt;
+      color: #0f172a;
+      border-bottom: 2.5px solid #f97316;
+      padding-bottom: 8px;
+      margin-top: 24px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2.section-title {
+      font-size: 13.5pt;
+      color: #1e3a8a;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 4px;
+    }
+
+    h3.sub-section-title {
+      font-size: 11.5pt;
+      color: #334155;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin-bottom: 10px;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 24px;
+      margin-bottom: 12px;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    strong {
+      color: #0f172a;
+    }
+
+    /* =====================================================================
+       COVER / TITLE PAGE
+       ===================================================================== */
+    .cover-page {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 40px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: #fff7ed;
+      color: #ea580c;
+      border: 1px solid #fed7aa;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 9.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .cover-title {
+      font-size: 28pt;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .cover-title span {
+      color: #ea580c;
+    }
+
+    .cover-subtitle {
+      font-size: 13pt;
+      color: #475569;
+      font-weight: 400;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .cover-divider {
+      height: 4px;
+      width: 80px;
+      background: #ea580c;
+      border-radius: 2px;
+      margin-bottom: 30px;
+    }
+
+    .cover-metadata-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meta-label {
+      font-size: 8.5pt;
+      text-transform: uppercase;
+      color: #64748b;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+    }
+
+    .meta-value {
+      font-size: 10.5pt;
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .cover-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .feature-chip {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 9pt;
+      color: #334155;
+      font-weight: 500;
+    }
+
+    .cover-footer {
+      border-top: 1px solid #cbd5e1;
+      padding-top: 15px;
+      font-size: 9pt;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* =====================================================================
+       TABLE OF CONTENTS
+       ===================================================================== */
+    .toc-container {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .toc-title {
+      font-size: 15pt;
+      font-weight: 700;
+      color: #0f172a;
+      border-bottom: 2px solid #cbd5e1;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+
+    .toc-list {
+      list-style: none;
+      margin-left: 0;
+    }
+
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 6px 0;
+      border-bottom: 1px dotted #cbd5e1;
+      font-size: 10pt;
+    }
+
+    .toc-item.sub {
+      padding-left: 20px;
+      font-size: 9.5pt;
+      color: #475569;
+    }
+
+    .toc-number {
+      font-weight: 700;
+      color: #ea580c;
+      margin-right: 8px;
+    }
+
+    .toc-name {
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    /* =====================================================================
+       TABLES
+       ===================================================================== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 20px 0;
+      font-size: 9.5pt;
+    }
+
+    th {
+      background-color: #0f172a;
+      color: #ffffff;
+      text-align: left;
+      padding: 8px 12px;
+      font-weight: 600;
+      font-size: 9pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 1px solid #0f172a;
+    }
+
+    td {
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+
+    .status-pass {
+      display: inline-block;
+      background: #dcfce7;
+      color: #15803d;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 8.5pt;
+    }
+
+    /* =====================================================================
+       CALLOUT BOXES & ALERTS
+       ===================================================================== */
+    .callout {
+      border-left: 4px solid #3b82f6;
+      background: #eff6ff;
+      padding: 12px 16px;
+      border-radius: 0 6px 6px 0;
+      margin: 14px 0;
+      font-size: 10pt;
+    }
+
+    .callout.important {
+      border-left-color: #ea580c;
+      background: #fff7ed;
+    }
+
+    .callout.success {
+      border-left-color: #10b981;
+      background: #ecfdf5;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .callout.important .callout-title {
+      color: #c2410c;
+    }
+
+    .callout.success .callout-title {
+      color: #047857;
+    }
+
+    /* =====================================================================
+       CODE BLOCKS & MONOSPACE
+       ===================================================================== */
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 14px 16px;
+      border-radius: 6px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 8.5pt;
+      line-height: 1.45;
+      overflow-x: auto;
+      margin: 12px 0 16px 0;
+      border: 1px solid #1e293b;
+    }
+
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 9pt;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    pre code {
+      background: transparent;
+      color: #f8fafc;
+      padding: 0;
+      border: none;
+    }
+
+    .code-comment { color: #94a3b8; font-style: italic; }
+    .code-keyword { color: #38bdf8; font-weight: bold; }
+    .code-string  { color: #4ade80; }
+    .code-func    { color: #fde047; }
+
+    /* =====================================================================
+       DIAGRAM & ARCHITECTURE BOXES
+       ===================================================================== */
+    .diagram-container {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      text-align: center;
+    }
+
+    .diagram-layer {
+      background: #ffffff;
+      border: 1.5px solid #0f172a;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin: 8px 0;
+      text-align: left;
+    }
+
+    .diagram-layer-title {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 9.5pt;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .diagram-badge {
+      background: #ea580c;
+      color: #ffffff;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 7.5pt;
+      font-weight: bold;
+    }
+
+    .diagram-desc {
+      font-size: 8.5pt;
+      color: #475569;
+    }
+
+    .diagram-arrow {
+      color: #64748b;
+      font-weight: bold;
+      font-size: 11pt;
+      margin: 2px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================================
+       COVER PAGE
+       ===================================================================== -->
+  <div class="cover-page">
+    <div>
+      <div class="cover-badge">Official Technical Documentation</div>
+      <h1 class="cover-title">CampusCart <span>Storefront</span></h1>
+      <p class="cover-subtitle">
+        Comprehensive Technical Documentation, System Architecture, Codebase Walkthrough, and Quality Assurance Report for the Indian Higher Education Campus E-Commerce Platform.
+      </p>
+      <div class="cover-divider"></div>
+
+      <div class="cover-metadata-grid">
+        <div class="meta-item">
+          <span class="meta-label">Project Name</span>
+          <span class="meta-value">CampusCart – E-Commerce Web Storefront</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Release Version</span>
+          <span class="meta-value">v1.0.0 (Production Verified)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Target Audience</span>
+          <span class="meta-value">Engineering Colleges & University Campuses</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Technology Stack</span>
+          <span class="meta-value">HTML5 &bull; CSS3 &bull; Vanilla ES6+ &bull; LocalStorage</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Regional Localization</span>
+          <span class="meta-value">Indian National Rupees (₹) &bull; DoT &bull; DoP Standards</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Publication Date</span>
+          <span class="meta-value">November 2026</span>
+        </div>
+      </div>
+
+      <div class="cover-features">
+        <div class="feature-chip">Zero External Frameworks</div>
+        <div class="feature-chip">Persistent Client-Side State</div>
+        <div class="feature-chip">Sub-Second Load Time</div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <span>CampusCart Engineering Group &bull; Open Academic Standard</span>
+      <span>Confidential & Free Distribution</span>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       TABLE OF CONTENTS
+       ===================================================================== -->
+  <div class="page-break"></div>
+
+  <div class="toc-container">
+    <div class="toc-title">Table of Contents</div>
+    <ul class="toc-list">
+      <li class="toc-item">
+        <span><span class="toc-number">1.</span><span class="toc-name">Executive Summary</span></span>
+        <span>Page 3</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">2.</span><span class="toc-name">Problem Statement & Market Context</span></span>
+        <span>Page 3</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">3.</span><span class="toc-name">Technology Stack & Architectural Rationale</span></span>
+        <span>Page 4</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">4.</span><span class="toc-name">Project Directory & File Structure</span></span>
+        <span>Page 4</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">5.</span><span class="toc-name">Component-by-Component Frontend Architecture</span></span>
+        <span>Page 5</span>
+      </li>
+      <li class="toc-item sub">
+        <span>5.1 Responsive Navigation Bar & Live Badge Counter</span>
+        <span>Page 5</span>
+      </li>
+      <li class="toc-item sub">
+        <span>5.2 Hero Section & Promotional Call-to-Action</span>
+        <span>Page 5</span>
+      </li>
+      <li class="toc-item sub">
+        <span>5.3 Academic Category Quick-Filter Grid</span>
+        <span>Page 5</span>
+      </li>
+      <li class="toc-item sub">
+        <span>5.4 Product Listing & Dynamic Card Architecture</span>
+        <span>Page 6</span>
+      </li>
+      <li class="toc-item sub">
+        <span>5.5 Composite Search, Filter & Multi-Sort Toolbar</span>
+        <span>Page 6</span>
+      </li>
+      <li class="toc-item sub">
+        <span>5.6 Shopping Cart Drawer & State Controller</span>
+        <span>Page 6</span>
+      </li>
+      <li class="toc-item sub">
+        <span>5.7 Indian Checkout Modal & Form Validation</span>
+        <span>Page 7</span>
+      </li>
+      <li class="toc-item sub">
+        <span>5.8 Order Confirmation Modal & Unique Token Generator</span>
+        <span>Page 7</span>
+      </li>
+      <li class="toc-item sub">
+        <span>5.9 Dynamic Toast Notification System</span>
+        <span>Page 7</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">6.</span><span class="toc-name">Source Code Deep-Dive & Function Reference</span></span>
+        <span>Page 8</span>
+      </li>
+      <li class="toc-item sub">
+        <span>6.1 products.js – REST API & Catalog Registry</span>
+        <span>Page 8</span>
+      </li>
+      <li class="toc-item sub">
+        <span>6.2 cart.js – State Management & Financial Math</span>
+        <span>Page 8</span>
+      </li>
+      <li class="toc-item sub">
+        <span>6.3 filters.js – Multi-Predicate Filtering & Sorting</span>
+        <span>Page 9</span>
+      </li>
+      <li class="toc-item sub">
+        <span>6.4 checkout.js – Input Validation & Order Submission</span>
+        <span>Page 9</span>
+      </li>
+      <li class="toc-item sub">
+        <span>6.5 main.js – App Orchestration & Event Delegation</span>
+        <span>Page 10</span>
+      </li>
+      <li class="toc-item sub">
+        <span>6.6 style.css – Design Tokens & Fluid Layout</span>
+        <span>Page 10</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">7.</span><span class="toc-name">Data Models & Storage Specifications</span></span>
+        <span>Page 11</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">8.</span><span class="toc-name">Core Algorithms & Mathematical Logic</span></span>
+        <span>Page 11</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">9.</span><span class="toc-name">Indian Campus Localization Standards</span></span>
+        <span>Page 12</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">10.</span><span class="toc-name">Security, Performance & Resilience</span></span>
+        <span>Page 12</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">11.</span><span class="toc-name">Comprehensive Verification Test Matrix</span></span>
+        <span>Page 13</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">12.</span><span class="toc-name">Developer Guide & GitHub Deployment</span></span>
+        <span>Page 14</span>
+      </li>
+      <li class="toc-item">
+        <span><span class="toc-number">13.</span><span class="toc-name">Future Roadmap & Production Scaling</span></span>
+        <span>Page 14</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- =====================================================================
+       CHAPTER 1 & 2
+       ===================================================================== -->
+  <h1 class="chapter-title">1. Executive Summary</h1>
+  <p>
+    <strong>CampusCart – Indian Campus Edition</strong> is a production-grade, single-page web storefront created to resolve the recurring procurement challenges experienced by college students across Indian universities and technical institutes. Commercial platforms (e.g., Amazon, Flipkart) are ill-suited for immediate student needs: they suffer from delivery lead times of 2 to 4 days, require minimum spend quotas to qualify for free shipping, and carry generic consumer catalogs rather than specialized curriculum requirements.
+  </p>
+  <p>
+    CampusCart delivers an instantaneous, localized academic storefront allowing students to procure engineering textbooks (GATE, CSE, ECE, Mechanical), drafting tools, laboratory coats, scientific calculators, and computer accessories with sub-second response times. Constructed strictly using native web standards—<strong>HTML5, CSS3, and ES6+ JavaScript</strong>—with zero framework dependencies, CampusCart guarantees frictionless execution across desktop and mobile browsers alike.
+  </p>
+
+  <h1 class="chapter-title">2. Problem Statement & Market Context</h1>
+  <p>
+    Higher education institutions in India represent intense micro-marketplaces with sharp seasonal demands. At the beginning of semesters and during examination periods, thousands of students require exact textbooks, lab instruments, and technical supplies simultaneously. The prevailing ecosystem suffers from three major structural frictions:
+  </p>
+  <ul>
+    <li><strong>Academic Urgency & Exam Pressure:</strong> Laboratory submissions and semester exams cannot wait 72 hours for parcel couriers. Immediate access to standard authors (e.g., B.S. Grewal, Horowitz, Morris Mano) is critical.</li>
+    <li><strong>Economic Inefficiency:</strong> Imposing a ₹40–₹60 delivery fee on a ₹150 exam notebook pack or a ₹45 drawing template creates disproportionate friction for cost-conscious students.</li>
+    <li><strong>Information Asymmetry:</strong> Students often waste valuable study hours visiting physical cooperative stores only to find required calculators or drafters sold out.</li>
+  </ul>
+  <p>
+    CampusCart resolves these challenges by consolidating real-time inventory tracking, local hostel delivery simulation, and multi-parameter filtering into a zero-latency client application.
+  </p>
+
+  <!-- =====================================================================
+       CHAPTER 3 & 4
+       ===================================================================== -->
+  <div class="page-break"></div>
+
+  <h1 class="chapter-title">3. Technology Stack & Architectural Rationale</h1>
+  <p>
+    To guarantee universal compatibility, zero compilation overhead, and immediate loading speeds, CampusCart is built entirely on the <strong>Native Web Architecture</strong>:
+  </p>
+
+  <div class="diagram-container avoid-break">
+    <div style="font-weight: bold; font-size: 11pt; color: #0f172a; margin-bottom: 8px;">CAMPUSCART SYSTEM ARCHITECTURE LAYERS</div>
+    
+    <div class="diagram-layer">
+      <div class="diagram-layer-title">
+        <span>PRESENTATION LAYER (UI / UX)</span>
+        <span class="diagram-badge">Semantic HTML5 + CSS3</span>
+      </div>
+      <div class="diagram-desc">Modular CSS Custom Properties, Fluid Layouts (clamp), Responsive Grid, Accessible Modals, Off-Canvas Drawers.</div>
+    </div>
+    
+    <div class="diagram-arrow">&darr; &uarr; DOM Events & Reactive Renders</div>
+    
+    <div class="diagram-layer">
+      <div class="diagram-layer-title">
+        <span>APPLICATION LOGIC LAYER (ES6+ Vanilla JavaScript)</span>
+        <span class="diagram-badge">Decoupled Modules</span>
+      </div>
+      <div class="diagram-desc">main.js (Conductor) &bull; products.js (Catalog) &bull; cart.js (State Machine) &bull; filters.js (Predicate Pipeline) &bull; checkout.js (Validator)</div>
+    </div>
+    
+    <div class="diagram-arrow">&darr; &uarr; Serialization & HTTP Invocations</div>
+    
+    <div class="diagram-layer">
+      <div class="diagram-layer-title">
+        <span>PERSISTENCE & EXTERNAL SERVICE LAYER</span>
+        <span class="diagram-badge">Browser & Network API</span>
+      </div>
+      <div class="diagram-desc">HTML5 LocalStorage API (State Durability) &bull; Fetch API (DummyJSON REST Integration) &bull; Offline Fallback Catalog</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Technological Justifications</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Technology</th>
+        <th>Rationale & Academic Benefit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Structure</strong></td>
+        <td>HTML5 Semantic Elements</td>
+        <td>Strict use of <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, and <code>&lt;footer&gt;</code> ensures maximum accessibility (WCAG 2.1 AA) and clean DOM traversal.</td>
+      </tr>
+      <tr>
+        <td><strong>Styling</strong></td>
+        <td>Modern CSS3 (No Frameworks)</td>
+        <td>Eliminates 500KB+ framework overhead (Tailwind/Bootstrap). Leverages native CSS Grid for 2D catalog layouts, Flexbox for 1D toolbars, and CSS variables for instant theming.</td>
+      </tr>
+      <tr>
+        <td><strong>Logic</strong></td>
+        <td>Vanilla ES6+ JavaScript</td>
+        <td>Zero build tools (Webpack/Vite), instant execution, modern functional methods (<code>map</code>, <code>filter</code>, <code>reduce</code>, <code>find</code>), and asynchronous promises.</td>
+      </tr>
+      <tr>
+        <td><strong>State</strong></td>
+        <td>LocalStorage API</td>
+        <td>Provides synchronous, persistent storage of shopping cart items surviving page refreshes, tab re-opens, and browser restarts.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h1 class="chapter-title">4. Project Directory & File Structure</h1>
+  <p>The repository follows a clean, industry-standard modular file structure:</p>
+  <pre><code>CampusCart/
+│
+├── index.html                  <span class="code-comment"># Single-Page Storefront Root (Markup, Modals & Drawers)</span>
+│
+├── css/
+│   └── style.css               <span class="code-comment"># 1,200+ Lines: Design Tokens, Layouts & Media Queries</span>
+│
+├── js/
+│   ├── products.js             <span class="code-comment"># Catalog Schema, REST API Fetch & Offline Fallback Data</span>
+│   ├── cart.js                 <span class="code-comment"># Cart State Machine, LocalStorage Sync & Math Logic</span>
+│   ├── filters.js              <span class="code-comment"># Multi-Predicate Filter Pipeline & Search Debounce</span>
+│   ├── checkout.js             <span class="code-comment"># Indian Regulatory Form Validation & Order Placement</span>
+│   └── main.js                 <span class="code-comment"># App Bootstrapper, Event Delegation & Toast Triggers</span>
+│
+├── assets/images/              <span class="code-comment"># Static Brand Assets & Product Imagery</span>
+├── README.md                   <span class="code-comment"># Developer Quickstart & VS Code Live Server Guide</span>
+└── CampusCart_Comprehensive_Documentation.pdf <span class="code-comment"># Compiled Executive PDF Report</span></code></pre>
+
+  <!-- =====================================================================
+       CHAPTER 5: COMPONENT ARCHITECTURE
+       ===================================================================== -->
+  <div class="page-break"></div>
+
+  <h1 class="chapter-title">5. Component-by-Component Frontend Architecture</h1>
+
+  <h2 class="section-title">5.1 Responsive Navigation Bar & Live Badge Counter</h2>
+  <p>
+    The navigation header is fixed to the viewport top with a subtle backdrop blur effect (<code>backdrop-filter: blur(8px)</code>). It contains:
+  </p>
+  <ul>
+    <li><strong>Brand Logo:</strong> CampusCart logo featuring an Indian saffron graduation mortarboard icon and bold deep navy typography.</li>
+    <li><strong>Smooth-Scroll Navigation Links:</strong> Quick jumps to <code>#home</code>, <code>#products</code>, <code>#categories</code>, <code>#about</code>, and <code>#contact</code>.</li>
+    <li><strong>Live Cart Counter:</strong> A high-visibility badge displaying real-time quantity $N = \sum q_i$. It animates with a pulse effect whenever items are added or removed.</li>
+    <li><strong>Mobile Drawer Trigger:</strong> An animated hamburger button transitioning into a slide-out drawer on screens below $768\text{px}$.</li>
+  </ul>
+
+  <h2 class="section-title">5.2 Hero Section & Promotional Call-to-Action (CTA)</h2>
+  <p>
+    The storefront entrance features a high-impact hero banner designed to connect with Indian engineering and university students:
+  </p>
+  <ul>
+    <li><strong>Headline:</strong> <em>"Apna Campus, Apni Dukaan – Everything You Need for Campus Life."</em></li>
+    <li><strong>Core Value Propositions:</strong> Student discounts up to 35%, verified genuine academic gear, zero minimum order requirement, and instant hostel delivery within 2 hours.</li>
+    <li><strong>Primary Action:</strong> "Shop Now" button with smooth scroll targeting the product grid.</li>
+  </ul>
+
+  <h2 class="section-title">5.3 Academic Category Quick-Filter Grid</h2>
+  <p>Presents five curated categories with intuitive visual tiles:</p>
+  <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 12px 0;" class="avoid-break">
+    <div style="background: #f1f5f9; padding: 10px; border-radius: 6px; text-align: center; font-size: 8.5pt;">
+      <strong>1. Books</strong><br>GATE, CSE, ECE
+    </div>
+    <div style="background: #f1f5f9; padding: 10px; border-radius: 6px; text-align: center; font-size: 8.5pt;">
+      <strong>2. Electronics</strong><br>Casio, USB, Power
+    </div>
+    <div style="background: #f1f5f9; padding: 10px; border-radius: 6px; text-align: center; font-size: 8.5pt;">
+      <strong>3. Stationery</strong><br>Drafters, Spiral Sets
+    </div>
+    <div style="background: #f1f5f9; padding: 10px; border-radius: 6px; text-align: center; font-size: 8.5pt;">
+      <strong>4. Accessories</strong><br>Backpacks, Bottles
+    </div>
+    <div style="background: #f1f5f9; padding: 10px; border-radius: 6px; text-align: center; font-size: 8.5pt;">
+      <strong>5. Essentials</strong><br>Lab Coats, Goggles
+    </div>
+  </div>
+
+  <h2 class="section-title">5.4 Product Listing & Dynamic Card Architecture</h2>
+  <p>
+    Product cards are dynamically instantiated via JavaScript template literals. Every card incorporates:
+  </p>
+  <ul>
+    <li><strong>Discount & Stock Badges:</strong> Visual pills indicating savings percentage (e.g., <code>28% OFF</code>) and urgent stock alerts (e.g., <code>Only 2 left!</code>).</li>
+    <li><strong>Smart Image Box:</strong> Fluid image container with pre-allocated <code>aspect-ratio: 4/3</code> to guarantee Cumulative Layout Shift (CLS) is zero.</li>
+    <li><strong>Dual Pricing:</strong> Discounted current price in bold Indian Rupees (₹) alongside struck-through Original MRP.</li>
+    <li><strong>Reactive Action Button:</strong> "Add to Cart" button that automatically shifts to a disabled, grayed-out state if $\text{stock} = 0$.</li>
+  </ul>
+
+  <h2 class="section-title">5.5 Composite Search, Filter & Multi-Sort Toolbar</h2>
+  <p>
+    A persistent, multi-faceted filtering strip that operates without inter-filter conflict:
+  </p>
+  <ul>
+    <li><strong>Live Keyword Search:</strong> Debounced query input matching product titles, descriptions, and category tags.</li>
+    <li><strong>Category Select:</strong> Dropdown synchronizing with the top visual category cards.</li>
+    <li><strong>Sorting Controller:</strong> Re-orders results by Featured, Price (Low to High), Price (High to Low), or Top Rated.</li>
+    <li><strong>In-Stock Only Filter:</strong> Checkbox instantly eliminating depleted inventory from view.</li>
+    <li><strong>Clear All Filters:</strong> Instant one-click reset restoring the complete catalog.</li>
+  </ul>
+
+  <!-- =====================================================================
+       CHAPTER 5 CONTINUED: CART & CHECKOUT
+       ===================================================================== -->
+  <div class="page-break"></div>
+
+  <h2 class="section-title">5.6 Shopping Cart Drawer & State Controller</h2>
+  <p>
+    The shopping cart resides in a modern, fixed right-hand slide-out drawer with a darkened backdrop overlay. Features include:
+  </p>
+  <ul>
+    <li><strong>Itemized Rows:</strong> Displays thumbnail, name, unit price, quantity increment/decrement controls, and a delete button.</li>
+    <li><strong>Physical Stock Guard:</strong> The increment button (<code>+</code>) disables automatically when quantity matches available warehouse stock.</li>
+    <li><strong>Financial Summary:</strong> Tally of Subtotal, Total Savings, Delivery Fee (₹0 for orders &ge; ₹299), and Final Payable Amount.</li>
+    <li><strong>Empty State Screen:</strong> Engaging graphic and "Start Shopping" button when cart quantity is 0.</li>
+  </ul>
+
+  <div class="callout important avoid-break">
+    <div class="callout-title">&#9888; State Persistence Guarantee</div>
+    Every cart mutation immediately serializes the cart array to <code>localStorage</code>. Even if a student abruptly closes their browser or refreshes the page, their selected items, quantities, and prices are fully restored.
+  </div>
+
+  <h2 class="section-title">5.7 Indian Checkout Modal & Form Validation</h2>
+  <p>
+    Clicking "Proceed to Checkout" opens an accessible modal dialog containing:
+  </p>
+  <ul>
+    <li><strong>Student Details:</strong> Full Name, College Email, and Indian 10-Digit Mobile Number.</li>
+    <li><strong>Hostel & Campus Delivery Address:</strong> Room/Hostel block, Campus area, City, Indian State dropdown, and 6-Digit PIN Code.</li>
+    <li><strong>Dynamic Order Summary:</strong> Recapitulates the itemized tally, delivery fee, and total amount in ₹ INR.</li>
+    <li><strong>Real-Time Input Validation:</strong> Evaluates fields against Indian regulatory standards with instantaneous visual error labels.</li>
+  </ul>
+
+  <h2 class="section-title">5.8 Order Confirmation Modal & Unique Token Generator</h2>
+  <p>
+    Upon successful checkout validation, the system triggers the Order Confirmation view:
+  </p>
+  <ul>
+    <li><strong>Unique Order ID:</strong> Generates an official tracking token formatted as <code>CC-YYYYMMDD-XXXX</code> (e.g., <code>CC-20261123-8E2B</code>).</li>
+    <li><strong>Hostel Delivery ETA:</strong> Displays an estimated delivery window of 2 hours directly to the student's room.</li>
+    <li><strong>Automatic State Flush:</strong> Purges the cart from memory and <code>localStorage</code>, resetting the badge counter to 0.</li>
+  </ul>
+
+  <h2 class="section-title">5.9 Dynamic Toast Notification System</h2>
+  <p>
+    Provides immediate, non-blocking user feedback for every critical action:
+  </p>
+  <ul>
+    <li><span class="status-pass">SUCCESS</span> <em>"Higher Engineering Mathematics added to cart!"</em></li>
+    <li><span style="background: #fef3c7; color: #b45309; padding: 2px 6px; border-radius: 3px; font-weight: bold; font-size: 8.5pt;">WARNING</span> <em>"Maximum stock reached for this product."</em></li>
+    <li><span style="background: #fee2e2; color: #b91c1c; padding: 2px 6px; border-radius: 3px; font-weight: bold; font-size: 8.5pt;">ERROR</span> <em>"Please correct the errors in the checkout form."</em></li>
+  </ul>
+
+  <!-- =====================================================================
+       CHAPTER 6: CODEBASE WALKTHROUGH
+       ===================================================================== -->
+  <div class="page-break"></div>
+
+  <h1 class="chapter-title">6. Source Code Deep-Dive & Function Reference</h1>
+
+  <h2 class="section-title">6.1 `products.js` – Inventory Catalog & REST API Integration</h2>
+  <p>
+    Houses the primary data registry, external REST API communications, and image fallback management:
+  </p>
+  <ul>
+    <li><code>FALLBACK_PRODUCTS</code>: Immutable array containing 24+ curated Indian campus products spanning all 5 categories with prices, MRP, stock counts, ratings, and image links.</li>
+    <li><code>fetchProducts()</code>: Asynchronously queries <code>https://dummyjson.com/products?limit=30</code> using <code>Promise.race()</code> with a 4-second timeout. If the request fails, times out, or runs offline, it returns <code>FALLBACK_PRODUCTS</code> without crashing.</li>
+    <li><code>mapApiProduct(item)</code>: Normalizes third-party API objects to the internal CampusCart schema, converting USD to INR ($1 = ₹83) and mapping categories.</li>
+    <li><code>handleImageError(img)</code>: Handles broken or unreachable remote image links by inserting an inline SVG placeholder with the product name.</li>
+  </ul>
+
+  <h2 class="section-title">6.2 `cart.js` – State Management & Financial Math</h2>
+  <p>Encapsulates cart manipulation and persistence logic:</p>
+  <ul>
+    <li><code>getCart()</code>: Reads from <code>localStorage.getItem('campuscart_cart_items')</code>, securely parses JSON via <code>try...catch</code>, and returns the array.</li>
+    <li><code>saveCart(cart)</code>: Writes updated cart back to <code>localStorage</code> and triggers the live counter badge update.</li>
+    <li><code>addToCart(productId)</code>: Verifies product existence and stock availability. Increments existing item quantity or pushes a new item.</li>
+    <li><code>updateCartQuantity(productId, delta)</code>: Adjusts quantity by $\pm 1$. Enforces the invariant $1 \le q_i \le \text{stock}$. Disables increment button when stock ceiling is reached.</li>
+    <li><code>removeFromCart(productId)</code>: Filters out specified product and refreshes cart UI.</li>
+    <li><code>clearCart()</code>: Purges all items from memory and storage.</li>
+    <li><code>calculateCartTotals()</code>: Computes Subtotal, Delivery Fee (₹0 if $\ge ₹299$, else ₹30), and Grand Total.</li>
+  </ul>
+
+  <h2 class="section-title">6.3 `filters.js` – Multi-Predicate Filtering & Sorting Engine</h2>
+  <p>Ensures seamless interaction between search queries, categories, stock status, and sorting criteria:</p>
+  <ul>
+    <li><code>filterState</code>: Global state holding <code>searchQuery</code>, <code>category</code>, <code>inStockOnly</code>, and <code>sortBy</code>.</li>
+    <li><code>applyFilters(products)</code>: Applies consecutive predicate filtering (Search $\land$ Category $\land$ Stock) followed by array sorting.</li>
+    <li><code>debounce(func, delayMs)</code>: Delays live search execution by 250ms to prevent CPU saturation during fast keyboard entry.</li>
+  </ul>
+
+  <h2 class="section-title">6.4 `checkout.js` – Validation Logic & Order Simulation</h2>
+  <p>Handles the simulated procurement finalization and strict regulatory compliance:</p>
+  <ul>
+    <li><code>validateIndianMobile(val)</code>: Tests against DoT regex <code>/^[6-9]\d{9}$/</code>.</li>
+    <li><code>validateIndianPin(val)</code>: Tests against postal regex <code>/^[1-9][0-9]{5}$/</code>.</li>
+    <li><code>validateEmail(val)</code>: Enforces standard RFC 5322 email patterns.</li>
+    <li><code>validateCheckoutForm()</code>: Validates all inputs and displays inline error styling.</li>
+    <li><code>generateOrderId()</code>: Generates tokens formatted as <code>CC-YYYYMMDD-XXXX</code>.</li>
+    <li><code>handleCheckoutSubmit(e)</code>: Orchestrates order placement, displays loader, opens confirmation modal, and clears the cart.</li>
+  </ul>
+
+  <h2 class="section-title">6.5 `main.js` – App Orchestrator & Event Delegation</h2>
+  <p>The core controller that boots the application on <code>DOMContentLoaded</code>:</p>
+  <ul>
+    <li><code>initApp()</code>: Orchestrates product fetching, cart badge initialization, event listener registration, and initial grid rendering.</li>
+    <li><code>renderProductGrid(items)</code>: Renders product cards into the DOM using optimized DocumentFragment nodes to minimize browser reflows.</li>
+    <li><code>showToast(msg, type)</code>: Spawns self-dismissing toast notifications.</li>
+    <li><code>setupModalHandlers()</code>: Binds keyboard (Escape key) and overlay click events for closing modals and drawers.</li>
+  </ul>
+
+  <h2 class="section-title">6.6 `style.css` – Design Tokens & Layout Architecture</h2>
+  <p>A comprehensive stylesheet establishing the design language:</p>
+  <ul>
+    <li><strong>CSS Variables:</strong> Standardizes brand colors (Navy <code>#0f172a</code>, Saffron <code>#f97316</code>), surface backgrounds, typography scales, and shadows.</li>
+    <li><strong>Balanced Spacing:</strong> Uses an adaptive container with <code>max-width: 1280px</code> and fluid padding <code>clamp(1rem, 3vw, 2.5rem)</code> eliminating left/right whitespace gaps.</li>
+    <li><strong>Responsive Breakpoints:</strong> Clean transitions across desktop, tablet, and mobile displays without horizontal scrollbars.</li>
+  </ul>
+
+  <!-- =====================================================================
+       CHAPTER 7 & 8: DATA MODELS & ALGORITHMS
+       ===================================================================== -->
+  <div class="page-break"></div>
+
+  <h1 class="chapter-title">7. Data Models & Storage Specifications</h1>
+
+  <h2 class="section-title">7.1 Product Schema</h2>
+  <pre><code>{
+  <span class="code-keyword">"id"</span>: 1,
+  <span class="code-keyword">"name"</span>: <span class="code-string">"Higher Engineering Mathematics - B.S. Grewal"</span>,
+  <span class="code-keyword">"category"</span>: <span class="code-string">"books"</span>,
+  <span class="code-keyword">"price"</span>: 649,
+  <span class="code-keyword">"originalPrice"</span>: 899,
+  <span class="code-keyword">"rating"</span>: 4.8,
+  <span class="code-keyword">"reviews"</span>: 142,
+  <span class="code-keyword">"stock"</span>: 8,
+  <span class="code-keyword">"image"</span>: <span class="code-string">"https://images.unsplash.com/..."</span>,
+  <span class="code-keyword">"description"</span>: <span class="code-string">"Standard textbook for engineering mathematics covering calculus and ODEs."</span>
+}</code></pre>
+
+  <h2 class="section-title">7.2 Shopping Cart State Model</h2>
+  <pre><code><span class="code-comment">// Stored under localStorage key: 'campuscart_cart_items'</span>
+[
+  {
+    <span class="code-keyword">"id"</span>: 1,
+    <span class="code-keyword">"name"</span>: <span class="code-string">"Higher Engineering Mathematics - B.S. Grewal"</span>,
+    <span class="code-keyword">"price"</span>: 649,
+    <span class="code-keyword">"originalPrice"</span>: 899,
+    <span class="code-keyword">"stock"</span>: 8,
+    <span class="code-keyword">"quantity"</span>: 2,
+    <span class="code-keyword">"image"</span>: <span class="code-string">"https://images.unsplash.com/..."</span>
+  }
+]</code></pre>
+
+  <h1 class="chapter-title">8. Core Algorithms & Mathematical Logic</h1>
+
+  <h2 class="section-title">8.1 Multi-Predicate Filtering Pipeline</h2>
+  <p>Products are evaluated through a strict conjunction of three predicate functions:</p>
+  <pre><code><span class="code-keyword">const</span> filtered = allProducts.filter(p =&gt; {
+  <span class="code-keyword">const</span> matchesSearch = !query || 
+    p.name.toLowerCase().includes(query) || 
+    p.description.toLowerCase().includes(query);
+  <span class="code-keyword">const</span> matchesCategory = category === <span class="code-string">'all'</span> || p.category === category;
+  <span class="code-keyword">const</span> matchesStock = !inStockOnly || p.stock &gt; 0;
+
+  <span class="code-keyword">return</span> matchesSearch &amp;&amp; matchesCategory &amp;&amp; matchesStock;
+});</code></pre>
+
+  <h2 class="section-title">8.2 Cart Inventory Invariant Protection</h2>
+  <p>The cart prevents adding more items than available in warehouse stock:</p>
+  <pre><code><span class="code-keyword">function</span> <span class="code-func">addToCart</span>(productId) {
+  <span class="code-keyword">const</span> product = catalog.find(p =&gt; p.id === productId);
+  <span class="code-keyword">const</span> existing = cart.find(item =&gt; item.id === productId);
+
+  <span class="code-keyword">if</span> (existing) {
+    <span class="code-keyword">if</span> (existing.quantity &gt;= product.stock) {
+      showToast(<span class="code-string">"Maximum stock limit reached!"</span>, <span class="code-string">"warning"</span>);
+      <span class="code-keyword">return</span>;
+    }
+    existing.quantity += 1;
+  } <span class="code-keyword">else</span> {
+    cart.push({ ...product, quantity: 1 });
+  }
+  saveCart(cart);
+}</code></pre>
+
+  <h2 class="section-title">8.3 Financial Calculations & Rupee Formatting</h2>
+  <ul>
+    <li><strong>Subtotal:</strong> $\sum (p_i \times q_i)$</li>
+    <li><strong>Delivery Fee:</strong> ₹0 if Subtotal $\ge$ ₹299, else ₹30.</li>
+    <li><strong>Grand Total:</strong> $\text{Subtotal} + \text{Delivery Fee}$.</li>
+    <li><strong>INR Number Formatting:</strong> <code>'₹' + Number(amt).toLocaleString('en-IN')</code>.</li>
+  </ul>
+
+  <!-- =====================================================================
+       CHAPTER 9 & 10: LOCALIZATION & SECURITY
+       ===================================================================== -->
+  <div class="page-break"></div>
+
+  <h1 class="chapter-title">9. Indian Campus Localization Standards</h1>
+  <p>CampusCart is tailored specifically for the Indian academic environment:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Domain</th>
+        <th>Standard Implemented</th>
+        <th>Validation / Display Specification</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Currency</strong></td>
+        <td>Indian Rupee (INR ₹)</td>
+        <td>Formatted using <code>en-IN</code> localization: e.g., ₹1,49,999 with lakhs/crores formatting.</td>
+      </tr>
+      <tr>
+        <td><strong>Mobile Standard</strong></td>
+        <td>Department of Telecommunications (DoT)</td>
+        <td>Exact 10 digits starting with 6, 7, 8, or 9: <code>/^[6-9]\d{9}$/</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Postal Standard</strong></td>
+        <td>Department of Posts (India Post)</td>
+        <td>Exact 6 digits with non-zero initial prefix: <code>/^[1-9][0-9]{5}$/</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Catalog Specifics</strong></td>
+        <td>Indian Engineering Curriculum</td>
+        <td>Includes B.S. Grewal Mathematics, Casio fx-991CW, Omega Mini Drafter, White Lab Coats.</td>
+      </tr>
+      <tr>
+        <td><strong>Campus Address</strong></td>
+        <td>Hostel Block & Room Modeling</td>
+        <td>Captures Hostel Name/Block, Room Number, City, Indian State, and Campus Area.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h1 class="chapter-title">10. Security, Performance & Error Resilience</h1>
+
+  <h2 class="section-title">10.1 XSS Prevention Strategy</h2>
+  <p>
+    All user inputs and dynamic strings are rendered through <code>textContent</code> rather than unescaped <code>innerHTML</code>. Where template literals are required, strings are sanitized through an HTML entity encoder to prevent script injection.
+  </p>
+
+  <h2 class="section-title">10.2 LocalStorage Quota & Corrupt Data Guard</h2>
+  <p>
+    Direct <code>JSON.parse()</code> on browser storage can trigger unhandled exceptions if the user tampers with the data. CampusCart protects every storage access:
+  </p>
+  <pre><code><span class="code-keyword">function</span> <span class="code-func">getCart</span>() {
+  <span class="code-keyword">try</span> {
+    <span class="code-keyword">const</span> raw = localStorage.getItem(<span class="code-string">'campuscart_cart_items'</span>);
+    <span class="code-keyword">return</span> raw ? JSON.parse(raw) : [];
+  } <span class="code-keyword">catch</span> (err) {
+    console.error(<span class="code-string">"Corrupted cart detected. Resetting."</span>, err);
+    localStorage.removeItem(<span class="code-string">'campuscart_cart_items'</span>);
+    <span class="code-keyword">return</span> [];
+  }
+}</code></pre>
+
+  <h2 class="section-title">10.3 Network Resilience & Offline Fallback</h2>
+  <p>
+    The application executes perfectly in offline or restricted classroom networks. If <code>fetch()</code> fails, the system automatically falls back to <code>FALLBACK_PRODUCTS</code> without UI disruption.
+  </p>
+
+  <h2 class="section-title">10.4 Image Asset Resilience</h2>
+  <p>
+    All image tags feature inline <code>onerror</code> event handlers that seamlessly replace broken image URLs with a clean, lightweight SVG vector placeholder.
+  </p>
+
+  <!-- =====================================================================
+       CHAPTER 11: VERIFICATION TEST MATRIX
+       ===================================================================== -->
+  <div class="page-break"></div>
+
+  <h1 class="chapter-title">11. Comprehensive Verification Test Matrix</h1>
+  <p>
+    All 16 functional scenarios have been thoroughly executed and verified:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Module</th>
+        <th>Test Scenario & Input</th>
+        <th>Expected Output</th>
+        <th>Result</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>TC-01</strong></td>
+        <td>Catalog</td>
+        <td>Launch application on clean browser</td>
+        <td>24+ Indian academic products load. Badge shows 0.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-02</strong></td>
+        <td>Search</td>
+        <td>Type "Casio" into search bar</td>
+        <td>Grid updates to display only Casio fx-991CW Calculator.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-03</strong></td>
+        <td>Category</td>
+        <td>Select "Stationery" category filter</td>
+        <td>Displays Mini Drafter, Drawing Pencils, Notebooks.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-04</strong></td>
+        <td>Sort</td>
+        <td>Sort by "Price: Low to High"</td>
+        <td>Lowest priced items (₹149 pencil set) appear first.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-05</strong></td>
+        <td>Filter</td>
+        <td>Toggle "In-Stock Only" checkbox</td>
+        <td>Depleted stock items are excluded from results.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-06</strong></td>
+        <td>Reset</td>
+        <td>Click "Clear Filters" button</td>
+        <td>All filter controls reset to default; full catalog restored.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-07</strong></td>
+        <td>Cart</td>
+        <td>Click "Add to Cart" on B.S. Grewal book</td>
+        <td>Badge counter updates to 1. Success toast displayed.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-08</strong></td>
+        <td>Cart</td>
+        <td>Increment item until quantity reaches stock</td>
+        <td>Increment button disables; warning toast appears.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-09</strong></td>
+        <td>Cart</td>
+        <td>Decrement item when quantity is 1</td>
+        <td>Item is removed from cart; total amount updates.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-10</strong></td>
+        <td>Persistence</td>
+        <td>Add 3 products and refresh browser (F5)</td>
+        <td>Cart items, quantities, and totals remain intact.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-11</strong></td>
+        <td>Validation</td>
+        <td>Submit mobile number "1234567890"</td>
+        <td>Inline error: "Enter valid 10-digit Indian mobile number".</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-12</strong></td>
+        <td>Validation</td>
+        <td>Submit PIN code "050001" or "5000"</td>
+        <td>Inline error: "Enter valid 6-digit Indian PIN code".</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-13</strong></td>
+        <td>Checkout</td>
+        <td>Submit checkout with valid student details</td>
+        <td>Order token generated (e.g., CC-20261123-A4F1). Modal opens.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-14</strong></td>
+        <td>State</td>
+        <td>Verify cart post-order confirmation</td>
+        <td>Cart is purged; badge resets to 0; LocalStorage cleared.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-15</strong></td>
+        <td>Responsive</td>
+        <td>Test on mobile viewport (375px width)</td>
+        <td>Navigation converts to drawer; grid flows into 1 column.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+      <tr>
+        <td><strong>TC-16</strong></td>
+        <td>Resilience</td>
+        <td>Run application in offline sandbox</td>
+        <td>Fallback catalog loads seamlessly without console crashes.</td>
+        <td><span class="status-pass">PASS</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- =====================================================================
+       CHAPTER 12 & 13: DEVELOPER GUIDE & ROADMAP
+       ===================================================================== -->
+  <div class="page-break"></div>
+
+  <h1 class="chapter-title">12. Developer Guide & GitHub Deployment</h1>
+
+  <h2 class="section-title">12.1 Local Execution</h2>
+  <ol>
+    <li>Open the project directory in <strong>Visual Studio Code</strong>: <code>E:\10K CODERS\Projects\CampusCart</code>.</li>
+    <li>Ensure the <strong>Live Server</strong> extension is enabled.</li>
+    <li>Right-click <code>index.html</code> and choose <strong>"Open with Live Server"</strong>.</li>
+    <li>The storefront launches at <code>http://127.0.0.1:5500/index.html</code>.</li>
+  </ol>
+
+  <h2 class="section-title">12.2 GitHub Deployment Instructions</h2>
+  <p>To publish the project to GitHub and deploy it live via GitHub Pages:</p>
+  <pre><code><span class="code-comment"># 1. Navigate to the project folder</span>
+cd "E:\10K CODERS\Projects\CampusCart"
+
+<span class="code-comment"># 2. Link your local repository to your remote GitHub repo</span>
+git remote add origin https://github.com/YOUR_USERNAME/CampusCart-Ecommerce-Storefront.git
+
+<span class="code-comment"># 3. Rename branch to main</span>
+git branch -M main
+
+<span class="code-comment"># 4. Push all commits to GitHub</span>
+git push -u origin main</code></pre>
+  <p>
+    <strong>Enabling GitHub Pages:</strong> Go to <em>Repository Settings &gt; Pages &gt; Branch: main &gt; Folder: / (root) &gt; Save</em>. Your site will be live worldwide within 60 seconds at <code>https://YOUR_USERNAME.github.io/CampusCart-Ecommerce-Storefront/</code>.
+  </p>
+
+  <h1 class="chapter-title">13. Future Roadmap & Production Scaling</h1>
+  
+  <div class="diagram-container avoid-break">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: left;">
+      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 12px;">
+        <div style="font-weight: bold; color: #ea580c; font-size: 10pt; margin-bottom: 6px;">PHASE 1 (Completed)</div>
+        <div style="font-size: 8.5pt; color: #475569;">
+          &bull; Pure Native Web Client<br>
+          &bull; LocalStorage Durability<br>
+          &bull; Indian Regulatory Forms<br>
+          &bull; 24+ Academic Products<br>
+          &bull; Zero Framework Overhead
+        </div>
+      </div>
+      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 12px;">
+        <div style="font-weight: bold; color: #1e3a8a; font-size: 10pt; margin-bottom: 6px;">PHASE 2 (Backend Integration)</div>
+        <div style="font-size: 8.5pt; color: #475569;">
+          &bull; Node.js / Express REST API<br>
+          &bull; PostgreSQL / Prisma ORM<br>
+          &bull; Razorpay UPI / QR Codes<br>
+          &bull; SMS & Email Confirmations<br>
+          &bull; Warehouse Inventory Sync
+        </div>
+      </div>
+      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 12px;">
+        <div style="font-weight: bold; color: #059669; font-size: 10pt; margin-bottom: 6px;">PHASE 3 (Platform Scale)</div>
+        <div style="font-size: 8.5pt; color: #475569;">
+          &bull; Peer-to-Peer Book Resale<br>
+          &bull; Student Delivery Rider Gig<br>
+          &bull; PWA Offline Installation<br>
+          &bull; AI Textbook Search<br>
+          &bull; Multi-Campus Multi-Tenancy
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 30px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 15px; font-size: 9pt; color: #64748b;">
+    <strong>CampusCart Project Documentation</strong> &bull; Developed by Senior Full-Stack Software Engineer &bull; Version 1.0.0
+  </div>
+
+</body>
+</html>
