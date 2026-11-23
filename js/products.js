@@ -67,7 +67,20 @@ CampusCart.Products = (function () {
       <rect x="220" y="490" width="160" height="30" rx="15" fill="#0D9488" opacity="0.3"/>
       <text x="300" y="510" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#CCFBF1" text-anchor="middle">CAMPUS STOCK DEPOT</text>
     </svg>`;
-    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    try {
+      return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+    } catch (e) {
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+  };
+
+  /**
+   * Safe image error handler
+   */
+  const handleImageError = (imgEl, category) => {
+    if (!imgEl) return;
+    imgEl.onerror = null;
+    imgEl.src = getFallbackSvg(imgEl.alt || 'Campus Item', category || 'College Essentials');
   };
 
   // Comprehensive, realistic Indian campus catalog with 100% DISTINCT, MATCHED imagery
@@ -141,8 +154,8 @@ CampusCart.Products = (function () {
       rating: 4.7,
       reviewsCount: 180,
       description: 'Previous 32 years GATE solved question papers with comprehensive step-by-step explanations for M.Tech admissions and PSU recruitments.',
-      // High-resolution photo: Open engineering revision notes and academic text
-      image: 'https://images.unsplash.com/photo-1532012164546-f432f2e3777f?auto=format&fit=crop&w=600&q=80',
+      // High-resolution photo: Open engineering revision notes and academic textbooks
+      image: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=600&q=80',
       badge: 'GATE 2026'
     },
     {
@@ -670,7 +683,7 @@ CampusCart.Products = (function () {
             alt="${safeTitle}" 
             class="product-card-img" 
             loading="lazy"
-            onerror="this.onerror=null; this.src='${safeFallbackSvg}';"
+            onerror="CampusCart.Products.handleImageError(this, '${safeCategory}');"
           >
           <div class="product-badge-group">
             ${safeBadge ? `<span class="badge-discount">${safeBadge}</span>` : ''}
@@ -728,6 +741,7 @@ CampusCart.Products = (function () {
     getStockStatus,
     renderProductCard,
     getFallbackSvg,
+    handleImageError,
     formatCurrency,
     escapeHTML
   };

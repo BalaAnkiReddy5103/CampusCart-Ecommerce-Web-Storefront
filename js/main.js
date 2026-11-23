@@ -178,7 +178,7 @@ CampusCart.UI = (function () {
           <img 
             src="${safeImage}" 
             alt="${safeTitle}"
-            onerror="this.onerror=null; this.src='${safeFallbackSvg}';"
+            onerror="CampusCart.Products.handleImageError(this, '${safeCategory}');"
           >
         </div>
 
