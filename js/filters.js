@@ -5,6 +5,7 @@
  */
 
 window.CampusCart = window.CampusCart || {};
+var CampusCart = window.CampusCart;
 
 CampusCart.Filters = (function () {
   'use strict';

@@ -6,6 +6,7 @@
  */
 
 window.CampusCart = window.CampusCart || {};
+var CampusCart = window.CampusCart;
 
 CampusCart.Products = (function () {
   'use strict';
@@ -44,11 +45,13 @@ CampusCart.Products = (function () {
    * Generates a high-resolution branded SVG data-URI as an offline/broken image fallback
    */
   const getFallbackSvg = (title, category) => {
-    const icon = category.includes('Books') ? '📚' :
-                 category.includes('Electronics') ? '💻' :
-                 category.includes('Stationery') ? '✏️' :
-                 category.includes('Accessories') ? '🎒' : '🛏️';
-    const cleanTitle = (title || 'Campus Item').slice(0, 32);
+    const catStr = String(category || 'College Essentials');
+    const icon = catStr.includes('Books') ? '📚' :
+                 catStr.includes('Electronics') ? '💻' :
+                 catStr.includes('Stationery') ? '✏️' :
+                 catStr.includes('Accessories') ? '🎒' : '🛏️';
+    const cleanTitle = String(title || 'Campus Item').slice(0, 32);
+    const cleanCat = escapeHTML(catStr).toUpperCase();
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
       <defs>
         <linearGradient id="bg" x1="0" y1="0" x2="600" y2="600" gradientUnits="userSpaceOnUse">
@@ -60,7 +63,7 @@ CampusCart.Products = (function () {
       <circle cx="300" cy="240" r="110" fill="#334155" opacity="0.6"/>
       <text x="300" y="275" font-size="96" text-anchor="middle">${icon}</text>
       <text x="300" y="405" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="24" font-weight="bold" fill="#FFFFFF" text-anchor="middle">${escapeHTML(cleanTitle)}</text>
-      <text x="300" y="445" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="16" fill="#F97316" font-weight="700" letter-spacing="2" text-anchor="middle">${escapeHTML(category).toUpperCase()}</text>
+      <text x="300" y="445" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="16" fill="#F97316" font-weight="700" letter-spacing="2" text-anchor="middle">${cleanCat}</text>
       <rect x="220" y="490" width="160" height="30" rx="15" fill="#0D9488" opacity="0.3"/>
       <text x="300" y="510" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#CCFBF1" text-anchor="middle">CAMPUS STOCK DEPOT</text>
     </svg>`;
@@ -508,11 +511,14 @@ CampusCart.Products = (function () {
     if (cat.includes('laptop') || cat.includes('smartphone') || cat.includes('mobile') || cat.includes('electronics') || cat.includes('tablet')) {
       return 'Electronics';
     }
-    if (cat.includes('book') || cat.includes('stationery')) {
+    if (cat.includes('book') || cat.includes('stationery') || cat.includes('paper') || cat.includes('office')) {
       return 'Stationery';
     }
-    if (cat.includes('watch') || cat.includes('bag') || cat.includes('sunglasses') || cat.includes('accessory')) {
+    if (cat.includes('watch') || cat.includes('bag') || cat.includes('sunglasses') || cat.includes('accessory') || cat.includes('shoes')) {
       return 'Accessories';
+    }
+    if (cat.includes('beauty') || cat.includes('skin') || cat.includes('fragrance') || cat.includes('groceries') || cat.includes('furniture') || cat.includes('home')) {
+      return 'College Essentials';
     }
     return 'College Essentials';
   };
@@ -524,7 +530,10 @@ CampusCart.Products = (function () {
     const statusTextEl = document.getElementById('api-status-text');
     const loadingStateEl = document.getElementById('products-loading');
 
-    if (loadingStateEl) loadingStateEl.hidden = false;
+    // Only display skeleton loaders if products are not yet rendered
+    if (loadingStateEl && allProducts.length === 0) {
+      loadingStateEl.hidden = false;
+    }
 
     try {
       // 3.5s timeout controller to ensure fast UX
@@ -549,18 +558,19 @@ CampusCart.Products = (function () {
           const inrPrice = Math.max(299, Math.round((item.price * 45) / 50) * 50 - 1);
           const discount = Math.round(item.discountPercentage || 20);
           const originalPrice = Math.round(inrPrice / (1 - discount / 100));
+          const mappedCat = mapDummyCategoryToCampus(item.category);
 
           return {
             id: `api-${item.id}`,
-            title: item.title,
-            category: mapDummyCategoryToCampus(item.category),
+            title: String(item.title || 'Campus Item'),
+            category: mappedCat,
             price: inrPrice,
             originalPrice: originalPrice > inrPrice ? originalPrice : Math.round(inrPrice * 1.25),
             stock: item.stock || 12,
             rating: Number(item.rating) || 4.6,
             reviewsCount: Math.floor(Math.random() * 80) + 20,
-            description: item.description,
-            image: item.thumbnail || item.images?.[0] || getFallbackSvg(item.title, mapDummyCategoryToCampus(item.category)),
+            description: String(item.description || 'Verified student essential.'),
+            image: item.thumbnail || item.images?.[0] || getFallbackSvg(item.title, mappedCat),
             badge: discount > 18 ? `${discount}% OFF` : 'Campus Verified'
           };
         });
@@ -638,16 +648,17 @@ CampusCart.Products = (function () {
    * Render HTML string for a single product card
    */
   const renderProductCard = (product) => {
+    if (!product) return '';
     const stockInfo = getStockStatus(product.stock);
     const hasDiscount = product.originalPrice && product.originalPrice > product.price;
     const discountPercent = hasDiscount
       ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
       : 0;
 
-    const safeTitle = escapeHTML(product.title);
-    const safeCategory = escapeHTML(product.category);
-    const safeDesc = escapeHTML(product.description);
-    const safeImage = escapeHTML(product.image);
+    const safeTitle = escapeHTML(product.title || 'Campus Product');
+    const safeCategory = escapeHTML(product.category || 'College Essentials');
+    const safeDesc = escapeHTML(product.description || '');
+    const safeImage = escapeHTML(product.image || '');
     const safeBadge = product.badge ? escapeHTML(product.badge) : '';
     const safeFallbackSvg = getFallbackSvg(product.title, product.category);
 

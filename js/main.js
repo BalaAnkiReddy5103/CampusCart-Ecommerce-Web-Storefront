@@ -5,6 +5,7 @@
  */
 
 window.CampusCart = window.CampusCart || {};
+var CampusCart = window.CampusCart;
 
 CampusCart.UI = (function () {
   'use strict';
@@ -291,20 +292,26 @@ CampusCart.UI = (function () {
 /**
  * Global App Initialization on DOM Ready
  */
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
   'use strict';
 
-  // 1. Fetch products (API or Fallback)
-  await CampusCart.Products.fetchProducts();
-
-  // 2. Initialize Cart State from LocalStorage
+  // 1. Initialize Cart State from LocalStorage
   CampusCart.Cart.initCart();
 
-  // 3. Initialize Search & Filters Engine
+  // 2. Initialize Search & Filters Engine & render rich local catalog instantly (0ms delay)
   CampusCart.Filters.initFilters();
 
-  // 4. Initialize Checkout Simulation & Validation
+  // 3. Initialize Checkout Simulation & Validation
   CampusCart.Checkout.initCheckout();
+
+  // 4. Connect to Cloud API asynchronously in the background (Non-blocking)
+  CampusCart.Products.fetchProducts()
+    .then(() => {
+      CampusCart.Filters.applyFilters();
+    })
+    .catch((err) => {
+      console.warn('CampusCart: Running on Indian campus local depot (offline/fallback mode).', err);
+    });
 
   // ------------------------------------------------------------------------
   // Setup Global Navigation & Drawer Handlers
